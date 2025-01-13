@@ -1,0 +1,33 @@
+#There are five data types you need to know for GCSEs
+
+character = "A"
+realFloat = 3.14
+integer = 15
+boolean = False
+string = "Hello, 1 world!"
+
+#It is possible to do maths with reals/floats and integers
+#It is not possible to do maths with characters or strings
+
+num1 = 10
+num2 = 15
+total = num1 + num2
+print(total)
+
+float1 = 10.5
+float2 = 15.3
+total = float1 + float2
+print(total)
+
+char1 = "1"
+char2 = "5"
+total = char1 + char2
+print(total)
+
+str1 = "10"
+str2 = "15"
+total = str1 + str2
+print(total)
+
+#When adding reals/floats or integers, the result is the mathematical answer
+#When adding characters or strings, they concatenate
