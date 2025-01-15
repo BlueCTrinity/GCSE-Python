@@ -1,0 +1,25 @@
+#Input is a function
+#It allows a user to input data into a program via the keyboard
+#It can also display strings
+
+#e.g.
+name = input("Enter your name: ")
+print("Your name is", name)
+
+#This will prompt the user to enter a string
+#The value the user enters will then be stored in the variable 'name'
+
+#Here are more examples:
+name = input("\nEnter your name again: ")
+age = input("Enter your age: ")
+favouriteColour = input("Enter your favourite colour: ")
+print("\nYour name is", name, "and you are", age, "years old, and your favouite colour is", favouriteColour + ".")
+
+#When using 'input', python always stores the data as a string
+#Therefore, use the 'int' function to do mathamatics with inputs, e.g.
+age = int(input("\nEnter your age again: "))
+print("Your age doubled would be", age*2 + ".")
+#This is called 'casting' and can be done with other data types too, e.g.
+str()
+int()
+float()
