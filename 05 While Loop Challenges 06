@@ -1,0 +1,9 @@
+num = 0
+
+while num < 11 or num > 19:
+    num = int(input("Enter a number between 10 and 20. "))
+    if num < 11:
+        print("Too low, try again.")
+    if num > 19:
+        print("Too high, try again.")
+print("Thank you.")
