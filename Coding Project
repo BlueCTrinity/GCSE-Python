@@ -1,0 +1,52 @@
+import random as r
+
+#setting variables
+start = False
+
+#defining functions
+def ShuffleFullDeck():
+    global cards
+    cards = ["A", "A", "A", "A"]
+
+    for i in range(2, 10):
+        cards.append(str(i))
+        cards.append(str(i))
+        cards.append(str(i))
+        cards.append(str(i))
+
+    cards.append("J")
+    cards.append("J")
+    cards.append("J")
+    cards.append("J")
+
+    cards.append("K")
+    cards.append("K")
+    cards.append("K")
+    cards.append("K")
+
+    cards.append("Q")
+    cards.append("Q")
+    cards.append("Q")
+    cards.append("Q")
+
+    r.shuffle(cards)
+    
+
+ShuffleFullDeck()
+
+
+#starting screen
+while start == False:
+    print("Welcome to blackjack! Choose your option: \nStart\nEnd\nRules\n")
+
+    ans = input()
+    if ans == "End":
+        exit()
+    elif ans == "Rules":
+        print("\nlorem ipsum\n")
+    elif ans == "Start":
+        start = True
+    else:
+        print("\nPlease answer again! (It's case sensitive!)\n")
+
+#main game
