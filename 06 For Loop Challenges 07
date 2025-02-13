@@ -1,0 +1,12 @@
+ans = input("Which direction do you want to go? (u/d)")
+
+if ans == "u":
+    ans2 = int(input("What is the top number?"))
+    for i in range(ans2):
+        print(i)
+elif ans == "d":
+    ans2 = int(input("Enter a number below 20."))
+    for i in range(20, ans2,-1):
+        print(i)
+else:
+    print("I don't understand.")
