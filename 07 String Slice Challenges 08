@@ -4,9 +4,8 @@ randInts = []
 for i in range(50):
     randInts.append(r.randrange(0, 100))
 
-for i in range(3):
-    NewName = 0
-    name = input("Input a last name.")
-    NewName = name[0:3]
-    NewName += str(randInts[i])
-    print(NewName)
+NewName = 0
+name = input("Input a last name.")
+NewName = name[0:3]
+NewName += str(randInts[i])
+print(NewName)
