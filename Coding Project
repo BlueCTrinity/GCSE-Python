@@ -4,8 +4,8 @@ import os
 
 
 #defining functions
-def CreateFile(fileName, value):
-    path = os.getcwd() + "\\" + fileName
+def CreateFile(fileName, value, profile):
+    path = os.getcwd() + "\\" + profile + "\\" + fileName
     if not os.path.isfile(path):
         scores = open(fileName, "x")
         scores.close()
@@ -14,6 +14,13 @@ def CreateFile(fileName, value):
     if not scores.read(1):
         scores = open(fileName, "w")
         scores.write(value)
+
+def SetFileVar(fileName, var, profile):
+    file = open(profile + "\\" + fileName + ".txt", "r")
+    var = int(file.read())
+    file.close()
+    return(var)
+    
 
 def ShuffleFullDeck(): 
     global cards 
@@ -56,25 +63,49 @@ def GetDealerTotal():
 ShuffleFullDeck() 
 
 #setting variables 
-start = False 
+start = False
+selectedProfile = False
 GameOn = True 
 GameLoop = True
 
-CreateFile("scores.txt", "100")
-CreateFile("wins.txt", "0")
-CreateFile("losses.txt", "0")
+CreateFile("profiles.txt", "Blue1 Blue2", "")
 
-scores = open("scores.txt", "r")
-chips = int(scores.read())
-scores.close()
+#Profile system
+scores = open("profiles.txt", "r")
+profiles = scores.read().split()
 
-scores = open("wins.txt", "r")
-wins = int(scores.read())
-scores.close()
+while selectedProfile == False:
+    print("Select a profile. If this is your first time playing, create one. The currently available profiles are: ")
+    for i in profiles:
+        print(i)
+    ans = input("Create a profile\n\n")
 
-scores = open("losses.txt", "r")
-losses = int(scores.read())
-scores.close()
+    if ans in profiles:
+        profile = ans
+        selectedProfile = True
+        
+    elif ans == "Create a profile":
+        ans = input("Enter the name of your profile.\n")
+        
+        if ans != "Create a profile":
+            profiles.append(ans)
+            print("\n")
+        else:
+            print("Nice try.\n")
+        
+    else:
+        print("Invalid answer. Try again. (Remember, it's case sensitive!)\n")
+
+#Text files in profile
+CreateFile("scores.txt", "100", profile)
+CreateFile("wins.txt", "0", profile)
+CreateFile("losses.txt", "0", profile)
+CreateFile("bankrupt.txt", "0", profile)
+
+SetFileVar(scores, chips, profile)
+SetFileVar(wins, wins, profile)
+SetFileVar(losses, losses, profile)
+SetFileVar(bankrupt, bankrupt, profile)
 
 while True:
     #starting screen 
@@ -96,15 +127,21 @@ while True:
             scores = open("losses.txt", "w")
             scores.write(str(losses))
             scores.close()
+
+            scores = open("bankrupt.txt", "w")
+            scores.write(str(losses))
+            scores.close()
+            
             exit() 
 
         elif ans == "Rules": 
             print("\nBasic Rules:\nThe aim of the game is to score higher than the dealer without going over 21. Both you and the dealer will start with two cards, you can see both of yours, but only one of the dealer's. You have two basic options: hit or stand. If you hit, you will draw one more card from the deck. If you stand, the dealer will draw cards until his total value is 17 or higher.\n\nWin conditions:\nIf you or the dealer get a \'Blackjack\' (drawing an ace and a ten value card as the first two cards) they win instantly. If you hit and bust, you lose. If you stand, and the dealer's final total is greater than yours, you lose. If you stand, and the dealer busts, you win. If you stand, and the dealer's final total is the same as yours, you win. If you stand, and the dealer's total is the same as yours, you draw.\n\nCard values:\nAll number cards are worth their number. Jacks, kings and queens are worth 10. Aces are worth either 1 or 11 (at least, they're supposed to, I haven't programmed it in yet).\n\nSpecial rules:\nAside from hitting and standing, you can also either double or split (at least, they're supposed to, I haven't programmed it in yet).")
 
         elif ans == "Scores":
-            print("You have " + str(chips) + " chips.")
+            print("\nYou have " + str(chips) + " chips.")
             print("You have won " + str(wins) + " times.")
-            print("You have lost " + str(losses) + " times.\n")
+            print("You have lost " + str(losses) + " times.")
+            print("You have gone bankrupt " + str(bankrupt) + " times.\n")
         
         elif ans == "Start": 
             GameLoop = True
@@ -116,7 +153,7 @@ while True:
 
     #main game
     while GameLoop == True:
-        print("You have " + str(chips) + " chips.")
+        print("\nYou have " + str(chips) + " chips.")
         bet = 0
         while bet < 1 :
             bet = int(input("How much would you like to bet? ")) 
@@ -185,13 +222,13 @@ while True:
                             DealerTotal += int(l)
 
                         if DealerTotal > 21:
-                            print("The dealer has busted!")
+                            print("\nThe dealer has busted!")
                             wins += 1
                             chips += bet
                             
                             GameOn = False
                         elif DealerTotal == 21:
-                            print("The dealer has won!")
+                            print("\nThe dealer has won!")
                             losses += 1
                             chips -= bet
                             GameOn = False
@@ -204,17 +241,17 @@ while True:
                             i += 1
                         else:
                             if DealerTotal > PlayerTotal:
-                                print("The dealer has won!")
+                                print("\nThe dealer has won!")
                                 losses += 1
                                 chips -= bet
                                 GameOn = False
                             elif DealerTotal < PlayerTotal:
-                                print("The dealer has lost!")
+                                print("\nThe dealer has lost!")
                                 wins += 1
                                 chips += bet
                                 GameOn = False
                             else:
-                                print("It was a draw!")
+                                print("\nIt was a draw!")
                                 GameOn = False
 
             #hitting
@@ -230,7 +267,7 @@ while True:
                 print("Your cards are:" + str(PlayerCards) + "\n")
 
                 if PlayerTotal > 21:
-                    print("You have busted!")
+                    print("\nYou have busted!")
                     losses += 1
                     chips -= bet
                     GameOn = False
@@ -238,11 +275,17 @@ while True:
 
 
         #end of game   
-        print("The dealer's cards were:" + str(DealerCards))
+        print("\nThe dealer's cards were:" + str(DealerCards))
         print("Your cards were:" + str(PlayerCards))
 
-        ans = input("Would you like to play again? (y/n)\n")
+        if chips < 1:
+            print("\nYou have gone bankrupt! Resetting your chips...")
+            chips = 100
+            bankrupt += 1
+
+        ans = input("Would you like to play again? (y/n) ")
         if ans == "n":
+            print("\n")
             GameLoop = False
             start = False
 
