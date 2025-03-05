@@ -7,17 +7,19 @@ import os
 def CreateFile(fileName, value, profile):
     path = os.getcwd() + "\\" + profile + "\\" + fileName
     if not os.path.isfile(path):
-        scores = open(fileName, "x")
+        print(path)
+        scores = open(path, "x")
         scores.close()
         
-    scores = open(fileName, "r")
+    scores = open(path, "r")
     if not scores.read(1):
-        scores = open(fileName, "w")
+        scores = open(path, "w")
         scores.write(value)
 
-def SetFileVar(fileName, var, profile):
-    file = open(profile + "\\" + fileName + ".txt", "r")
-    var = int(file.read())
+def SetFileVar(fileName, profile):
+    path = os.getcwd() + "\\" + profile + "\\" + fileName
+    file = open(path, "r")
+    var = file.read()
     file.close()
     return(var)
     
@@ -68,7 +70,7 @@ selectedProfile = False
 GameOn = True 
 GameLoop = True
 
-CreateFile("profiles.txt", "Blue1 Blue2", "")
+CreateFile("profiles.txt", "", "")
 
 #Profile system
 scores = open("profiles.txt", "r")
@@ -81,14 +83,28 @@ while selectedProfile == False:
     ans = input("Create a profile\n\n")
 
     if ans in profiles:
-        profile = ans
-        selectedProfile = True
+
+        password = input("Enter your password.\n")
+        profilePassword = SetFileVar("password.txt", ans)
+        if password == profilePassword:
+            profile = ans
+            selectedProfile = True
+        else:
+            print("Incorrect password!")
         
     elif ans == "Create a profile":
         ans = input("Enter the name of your profile.\n")
         
         if ans != "Create a profile":
+            file = open("profiles.txt", "a")
+            file.write(ans + " ")
+            file.close()
             profiles.append(ans)
+            os.mkdir(ans)
+
+            ans1 = input("Enter a password for the profile.\n")
+            CreateFile("password.txt", ans1, ans)
+            
             print("\n")
         else:
             print("Nice try.\n")
@@ -97,15 +113,16 @@ while selectedProfile == False:
         print("Invalid answer. Try again. (Remember, it's case sensitive!)\n")
 
 #Text files in profile
+        
 CreateFile("scores.txt", "100", profile)
 CreateFile("wins.txt", "0", profile)
 CreateFile("losses.txt", "0", profile)
 CreateFile("bankrupt.txt", "0", profile)
 
-SetFileVar(scores, chips, profile)
-SetFileVar(wins, wins, profile)
-SetFileVar(losses, losses, profile)
-SetFileVar(bankrupt, bankrupt, profile)
+chips = int(SetFileVar("scores.txt", profile))
+wins = int(SetFileVar("wins.txt", profile))
+losses = int(SetFileVar("losses.txt", profile))
+bankrupt = int(SetFileVar("bankrupt.txt", profile))
 
 while True:
     #starting screen 
@@ -115,20 +132,21 @@ while True:
 
         ans = input() 
 
-        if ans == "End": 
-            scores = open("scores.txt", "w")
+        if ans == "End":
+            path = os.getcwd() + "\\" + profile + "\\"
+            scores = open(path + "scores.txt", "w")
             scores.write(str(chips))
             scores.close()
             
-            scores = open("wins.txt", "w")
+            scores = open(path + "wins.txt", "w")
             scores.write(str(wins))
             scores.close()
             
-            scores = open("losses.txt", "w")
+            scores = open(path + "losses.txt", "w")
             scores.write(str(losses))
             scores.close()
 
-            scores = open("bankrupt.txt", "w")
+            scores = open(path + "bankrupt.txt", "w")
             scores.write(str(losses))
             scores.close()
             
