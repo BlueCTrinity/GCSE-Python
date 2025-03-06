@@ -75,12 +75,14 @@ CreateFile("profiles.txt", "", "")
 #Profile system
 scores = open("profiles.txt", "r")
 profiles = scores.read().split()
+scores.close()
 
 while selectedProfile == False:
     print("Select a profile. If this is your first time playing, create one. The currently available profiles are: ")
     for i in profiles:
         print(i)
-    ans = input("Create a profile\n\n")
+    print("Create a profile")
+    ans = input("Delete a profile\n\n")
 
     if ans in profiles:
 
@@ -95,7 +97,7 @@ while selectedProfile == False:
     elif ans == "Create a profile":
         ans = input("Enter the name of your profile.\n")
         
-        if ans != "Create a profile":
+        if ans != "Create a profile" and ans != "Delete a profile" and ans not in profiles:
             file = open("profiles.txt", "a")
             file.write(ans + " ")
             file.close()
@@ -108,7 +110,29 @@ while selectedProfile == False:
             print("\n")
         else:
             print("Nice try.\n")
-        
+
+    elif ans == "Delete a profile":
+        ans1 = input("Which profile will you delete?\n")
+        if ans1 in profiles:
+            password = input("Enter the password of the profile you wish to delete.\n")
+            if password == SetFileVar("password.txt", ans1):
+                scores = open("profiles.txt", "w")
+                print(profiles)
+                profiles.remove(ans1)
+                for i in profiles:
+                    scores.write(i + " ")
+                scores.close()
+
+                path = os.getcwd() + "\\" + ans1
+                print(path)
+                os.rmdir(path)
+                
+            else:
+                print("Incorrect password.")
+                
+        else:
+            print("That is not a profile.")
+    
     else:
         print("Invalid answer. Try again. (Remember, it's case sensitive!)\n")
 
