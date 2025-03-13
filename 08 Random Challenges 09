@@ -1,0 +1,25 @@
+import random as r
+
+choice = input("Pick a colour: \nGreen \nBlue \nRed \nOrange \nYellow\n")
+colours = ["Green", "Blue", "Red", "Orange", "Yellow"]
+colr = r.choice(colours)
+choice = ""
+
+def sigma():
+    global choice
+    if choice == colr:
+        print("Well done.")
+    else:
+        if colr == "Green":
+            print("i bet you are GREEN with envy")
+        if colr == "Blue":
+            print("You are probably feeling BLUE right now")
+        if colr == "Red":
+            print("I bet you are RED with anger right now")
+        if colr == "Orange":
+            print("You could probably eat an ORANGE right now")
+        else:
+            print("idk something about YELLOW i can't be bothered")
+        choice = input("Pick again")
+        sigma()
+sigma()
