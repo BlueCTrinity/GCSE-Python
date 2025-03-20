@@ -49,6 +49,11 @@ def GetPlayerTotal():
             PlayerTotal += 11
         else:
             PlayerTotal += int(l)
+    if PlayerTotal > 21:
+        for l in PlayerCards:
+            if l == "A":
+                if PlayerTotal > 21:
+                    PlayerTotal -= 10
 
 def GetDealerTotal():
     global DealerTotal
@@ -61,6 +66,10 @@ def GetDealerTotal():
             DealerTotal += 11
         else:
             DealerTotal += int(l)
+    for l in DealerCards:
+        if l == "A":
+            if DealerTotal > 21:
+                DealerTotal -= 10
 
 ShuffleFullDeck() 
 
@@ -69,6 +78,7 @@ start = False
 selectedProfile = False
 GameOn = True 
 GameLoop = True
+DDcheck = True
 
 CreateFile("profiles.txt", "", "")
 
@@ -78,233 +88,7 @@ profiles = scores.read().split()
 scores.close()
 
 while selectedProfile == False:
-    pri else:
-            print("Nice try.\n")
-
-    elif ans == "Delete a profile":
-        ans1 = input("Which profile will you delete?\n")
-        if ans1 in profiles:
-            password = input("Enter the password of the profile you wish to delete.\n")
-            if password == SetFileVar("password.txt", ans1):
-                scores = open("profiles.txt", "w")
-                print(profiles)
-                profiles.remove(ans1)
-                for i in profiles:
-                    scores.write(i + " ")
-                scores.close()
-
-                path = os.getcwd() + "\\" + ans1
-                print(path)
-                shutil.rmtree(path)
-                
-            else:
-                print("Incorrect password.")
-                
-        else:
-            print("That is not a profile.")
-    
-    else:
-        print("Invalid answer. Try again. (Remember, it's case sensitive!)\n")
-
-#Text files in profile
-        
-CreateFile("scores.txt", "100", profile)
-CreateFile("wins.txt", "0", profile)
-CreateFile("losses.txt", "0", profile)
-CreateFile("bankrupt.txt", "0", profile)
-
-chips = int(SetFileVar("scores.txt", profile))
-wins = int(SetFileVar("wins.txt", profile))
-losses = int(SetFileVar("losses.txt", profile))
-bankrupt = int(SetFileVar("bankrupt.txt", profile))
-
-os.system('cls')
-
-while True:
-    #starting screen 
-    while start == False: 
-        print("Welcome to blackjack! Choose your option: \nStart\nEnd\nScores\nRules\n") 
-
-        ans = input() 
-
-        if ans == "End":
-            path = os.getcwd() + "\\" + profile + "\\"
-            scores = open(path + "scores.txt", "w")
-            scores.write(str(chips))
-            scores.close()
-            
-            scores = open(path + "wins.txt", "w")
-            scores.write(str(wins))
-            scores.close()
-            
-            scores = open(path + "losses.txt", "w")
-            scores.write(str(losses))
-            scores.close()
-
-            scores = open(path + "bankrupt.txt", "w")
-            scores.write(str(losses))
-            scores.close()
-            
-            exit() 
-
-        elif ans == "Rules": 
-            print("\nBasic Rules:\nThe aim of the game is to score higher than the dealer without going over 21. Both you and the dealer will start with two cards, you can see both of yours, but only one of the dealer's. You have two basic options: hit or stand. If you hit, you will draw one more card from the deck. If you stand, the dealer will draw cards until his total value is 17 or higher.\n\nWin conditions:\nIf you or the dealer get a \'Blackjack\' (drawing an ace and a ten value card as the first two cards) they win instantly. If you hit and bust, you lose. If you stand, and the dealer's final total is greater than yours, you lose. If you stand, and the dealer busts, you win. If you stand, and the dealer's final total is the same as yours, you win. If you stand, and the dealer's total is the same as yours, you draw.\n\nCard values:\nAll number cards are worth their number. Jacks, kings and queens are worth 10. Aces are worth either 1 or 11 (at least, they're supposed to, I haven't programmed it in yet).\n\nSpecial rules:\nAside from hitting and standing, you can also either double or split (at least, they're supposed to, I haven't programmed it in yet).")
-
-        elif ans == "Scores":
-            print("\nYou have " + str(chips) + " chips.")
-            print("You have won " + str(wins) + " times.")
-            print("You have lost " + str(losses) + " times.")
-            print("You have gone bankrupt " + str(bankrupt) + " times.\n")
-        
-        elif ans == "Start": 
-            GameLoop = True
-            start = True
-
-        else: 
-            print("\nPlease answer again! (It's case sensitive!)\n") 
-
-
-    #main game
-    while GameLoop == True:
-        os.system('cls')
-        print("\nYou have " + str(chips) + " chips.")
-        bet = 0
-        while bet < 1 or bet > chips :
-            bet = int(input("How much would you like to bet? ")) 
-        GameOn = True 
-        ShuffleFullDeck()
-        #giving dealer & player cards 
-        DealerCards = [] 
-        PlayerCards = [] 
-        i = 4
-        DealerTotal = 0
-        PlayerTotal = 0
-
-        card = int(r.randint(0, len(cards)-1))
-        DealerCards.append(cards[card]) 
-        cards.remove(cards[card]) 
-
-        card = int(r.randint(0, len(cards)-2)) 
-        DealerCards.append(cards[card]) 
-        cards.remove(cards[card]) 
-
-        card = int(r.randint(0, len(cards)-3)) 
-        PlayerCards.append(cards[card]) 
-        cards.remove(cards[card])
-
-        card = int(r.randint(0, len(cards)-4)) 
-        PlayerCards.append(cards[card]) 
-        cards.remove(cards[card])
-
-        print("\nDealer has \'" + DealerCards[0] + "', \'?\'. ") 
-        print("Your cards are:" + str(PlayerCards))
-
-        #checking dealer's status
-        GetDealerTotal()
-        for l in DealerCards:
-            if DealerTotal > 21:
-                print("The dealer has busted!")
-                wins += 1
-                chips += bet
-                GameOn = False
-            elif DealerTotal == 21:
-                print("The dealer has won!")
-                losses += 1
-                chips -= bet
-                GameOn = False
-
-        #main loop
-        while GameOn == True:
-            print("Your options are:")
-            print("Hit")
-            print("Stand")
-            ans = input("\n")
-
-            #standing
-            if ans == "Stand":
-                GetPlayerTotal()
-
-                while GameOn == True:
-                    DealerTotal = 0
-
-                    for l in DealerCards:
-                        if l == "K" or l == "Q" or l == "J":
-                            DealerTotal += 10
-                        elif l == "A":
-                            DealerTotal += 11
-                        else:
-                            DealerTotal += int(l)
-
-                        if DealerTotal > 21:
-                            print("\nThe dealer has busted!")
-                            wins += 1
-                            chips += bet
-                            
-                            GameOn = False
-                        elif DealerTotal == 21:
-                            print("\nThe dealer has won!")
-                            losses += 1
-                            chips -= bet
-                            GameOn = False
-
-                    if GameOn == True:
-                        if DealerTotal < 17:
-                            card = int(r.randint(0, len(cards)-i)) 
-                            DealerCards.append(cards[card]) 
-                            cards.remove(cards[card])
-                            i += 1
-                        else:
-                            if DealerTotal > PlayerTotal:
-                                print("\nThe dealer has won!")
-                                losses += 1
-                                chips -= bet
-                                GameOn = False
-                            elif DealerTotal < PlayerTotal:
-                                print("\nThe dealer has lost!")
-                                wins += 1
-                                chips += bet
-                                GameOn = False
-                            else:
-                                print("\nIt was a draw!")
-                                GameOn = False
-
-            #hitting
-            elif ans == "Hit":
-                card = int(r.randint(0, len(cards)-i)) 
-                PlayerCards.append(cards[card]) 
-                cards.remove(cards[card])
-                i += 1
-
-                GetPlayerTotal()
-
-                print("\nDealer's cards are \'" + DealerCards[0] + "', \'?\'. ") 
-                print("Your cards are:" + str(PlayerCards) + "\n")
-
-                if PlayerTotal > 21:
-                    print("\nYou have busted!")
-                    losses += 1
-                    chips -= bet
-                    GameOn = False
-
-
-
-        #end of game   
-        print("\nThe dealer's cards were:" + str(DealerCards))
-        print("Your cards were:" + str(PlayerCards))
-
-        if chips < 1:
-            print("\nYou have gone bankrupt! Resetting your chips...")
-            chips = 100
-            bankrupt += 1
-
-        ans = input("Would you like to play again? (y/n) ")
-        if ans == "n":
-            print("\n")
-            GameLoop = False
-            start = False
-
-
-#COPYRIGHT BLUE CREIGHTON DOUGLASnt("Select a profile. If this is your first time playing, create one. The currently available profiles are: ")
+    print("Select a profile. If this is your first time playing, create one. The currently available profiles are: ")
     for i in profiles:
         print(i)
     print("Create a profile")
@@ -474,6 +258,10 @@ while True:
             print("Your options are:")
             print("Hit")
             print("Stand")
+            if DDcheck == True and bet*2 >= chips:
+                print("Double Down")
+            if PlayerCards[0] == PlayerCards[1]:
+                print("Split")
             ans = input("\n")
 
             #standing
@@ -482,26 +270,19 @@ while True:
 
                 while GameOn == True:
                     DealerTotal = 0
+                    GetDealerTotal()
 
-                    for l in DealerCards:
-                        if l == "K" or l == "Q" or l == "J":
-                            DealerTotal += 10
-                        elif l == "A":
-                            DealerTotal += 11
-                        else:
-                            DealerTotal += int(l)
-
-                        if DealerTotal > 21:
-                            print("\nThe dealer has busted!")
-                            wins += 1
-                            chips += bet
+                    if DealerTotal > 21:
+                        print("\nThe dealer has busted!")
+                        wins += 1
+                        chips += bet
                             
-                            GameOn = False
-                        elif DealerTotal == 21:
-                            print("\nThe dealer has won!")
-                            losses += 1
-                            chips -= bet
-                            GameOn = False
+                        GameOn = False
+                    elif DealerTotal == 21:
+                        print("\nThe dealer has won!")
+                        losses += 1
+                        chips -= bet
+                        GameOn = False
 
                     if GameOn == True:
                         if DealerTotal < 17:
@@ -526,6 +307,7 @@ while True:
 
             #hitting
             elif ans == "Hit":
+                DDcheck = False
                 card = int(r.randint(0, len(cards)-i)) 
                 PlayerCards.append(cards[card]) 
                 cards.remove(cards[card])
@@ -542,11 +324,72 @@ while True:
                     chips -= bet
                     GameOn = False
 
+            #double down
+            elif ans == "Double Down" and bet*2 <= chips:
+                bet = bet*2
+                            
+                card = int(r.randint(0, len(cards)-i)) 
+                PlayerCards.append(cards[card]) 
+                cards.remove(cards[card])
+                i += 1
+
+                GetPlayerTotal()
+                if PlayerTotal > 21:
+                    print("\nYou have busted!")
+                    losses += 1
+                    chips -= bet
+                    GameOn = False
+
+                while GameOn == True:
+                        DealerTotal = 0
+
+                        for l in DealerCards:
+                            if l == "K" or l == "Q" or l == "J":
+                                DealerTotal += 10
+                            elif l == "A":
+                                DealerTotal += 11
+                            else:
+                                DealerTotal += int(l)
+
+                            if DealerTotal > 21:
+                                print("\nThe dealer has busted!")
+                                wins += 1
+                                chips += bet
+                                
+                                GameOn = False
+                            elif DealerTotal == 21:
+                                print("\nThe dealer has won!")
+                                losses += 1
+                                chips -= bet
+                                GameOn = False
+
+                        if GameOn == True:
+                            if DealerTotal < 17:
+                                card = int(r.randint(0, len(cards)-i)) 
+                                DealerCards.append(cards[card]) 
+                                cards.remove(cards[card])
+                                i += 1
+                            else:
+                                if DealerTotal > PlayerTotal:
+                                    print("\nThe dealer has won!")
+                                    losses += 1
+                                    chips -= bet
+                                    GameOn = False
+                                elif DealerTotal < PlayerTotal:
+                                    print("\nThe dealer has lost!")
+                                    wins += 1
+                                    chips += bet
+                                    GameOn = False
+                                else:
+                                    print("\nIt was a draw!")
+                                    GameOn = False
+
 
 
         #end of game   
         print("\nThe dealer's cards were:" + str(DealerCards))
         print("Your cards were:" + str(PlayerCards))
+        DDcheck = True
 
         if chips < 1:
             print("\nYou have gone bankrupt! Resetting your chips...")
@@ -559,5 +402,7 @@ while True:
             GameLoop = False
             start = False
 
+
+#COPYRIGHT BLUE CREIGHTON DOUGLAS
 
 #COPYRIGHT BLUE CREIGHTON DOUGLAS
