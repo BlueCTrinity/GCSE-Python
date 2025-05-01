@@ -1,0 +1,9 @@
+array = ["1", "2", "3", "4", "5"]
+print(array)
+
+index = int(input("Enter an index. "))
+integer = input("Enter an integer. ")
+
+array[index] = integer
+
+print(array)
