@@ -1,0 +1,10 @@
+food = []
+
+for i in range(4):
+    food.append(input("Input a food."))
+
+print(food)
+
+del food[int(input("Which food to delete? "))-1]
+
+print(food)
