@@ -1,0 +1,11 @@
+nums = []
+
+for i in range(3):
+    num = input("Enter a number. ")
+    nums.append(num)
+
+ans = input("Do you want the last number you saved? ")
+if ans == "no":
+    del nums[2]
+    
+print(nums)
