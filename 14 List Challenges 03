@@ -1,0 +1,14 @@
+def AddAnother():
+    ans = input("Do you want to add another? ")
+    if ans != "no":
+        party.append(input("Write the name of someone you want to invite. "))
+        AddAnother()
+    else:
+        print("You invited " + str(len(party)) + " people.")
+
+party = []
+
+for i in range(3):
+    party.append(input("Write the name of someone you want to invite. "))
+
+AddAnother()
