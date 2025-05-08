@@ -1,0 +1,10 @@
+programmes = ["Catchphrase", "Jeoprady", "Weather", "News"]
+
+for p in programmes:
+    print(p)
+
+ans = input("Enter the name of a programme. ")
+programmes.insert(int(input("Enter the index you want it to add at. ")), ans)
+
+for p in programmes:
+    print(p)
