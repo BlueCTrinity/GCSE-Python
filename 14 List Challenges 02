@@ -1,0 +1,21 @@
+cars = []
+
+sentry = True
+
+while sentry == True:
+    ans = input("Input a car brand or press x to exit.")
+
+    if ans == "x":
+        print("exiting...")
+        sentry = False
+
+    else:
+        cars.append(ans)
+
+string = ""
+for c in cars:
+    string += c
+    string += ", "
+string = string.strip(", ")
+
+print("In the list is " + string + ".")
