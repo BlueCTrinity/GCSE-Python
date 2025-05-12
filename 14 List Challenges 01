@@ -1,0 +1,6 @@
+cars = []
+
+for i in range(3):
+    cars.append(input("Enter a car brand. "))
+
+print(cars)
