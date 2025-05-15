@@ -1,0 +1,22 @@
+columnNum = int(input("How many columns do you want? "))
+rowNum = int(input("How many rows do you want? "))
+editing = True
+
+EmptyArray = [["a" for column in range(columnNum)] for row in range(rowNum)]
+
+
+
+while editing:
+    for i in EmptyArray:
+        print(i)
+    ans = input("Do you want to edit the array? (y/n) ")
+    if ans == "n":
+        editing = False
+    else:
+        columnNum = int(input("How many columns do you want? "))
+        rowNum = int(input("How many rows do you want? "))
+        EmptyArray = [[0 for column in range(columnNum)] for row in range(rowNum)]
+
+
+for i in EmptyArray:
+    print(i)
