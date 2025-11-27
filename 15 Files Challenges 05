@@ -1,0 +1,11 @@
+file = open("names.txt", "r")
+print(file.read())
+file.close()
+
+file = open("names.txt", "a")
+file.write("\n"+input("\nAdd a new name. "))
+file.close()
+
+file = open("names.txt", "r")
+print(file.read())
+file.close()
