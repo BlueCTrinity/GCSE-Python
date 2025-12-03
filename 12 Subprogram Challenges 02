@@ -1,0 +1,8 @@
+def mainMenu():
+    print("Domination")
+    print("Team Deathmatch")
+    print("Headquaters")
+
+    ans = int(input("\nWhich mode do you choose? "))
+
+mainMenu()
