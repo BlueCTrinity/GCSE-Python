@@ -1,0 +1,25 @@
+def mainMenu():
+    print("Creative")
+    print("Survival")
+    print("Hardcore")
+    print("Adventure")
+    print("Exit")
+
+    ans = int(input("\nWhich mode do you choose? "))
+
+    match ans:
+        case 1:
+            print("Creative selected.")
+        case 2:
+            print("Survival selected.")
+        case 3:
+            print("Hardcore selected.")
+        case 4:
+            print("Adventure selected.")
+        case 5:
+            print("Exiting...")
+        case _:
+            print("Please select a valid option.\n")
+            mainMenu()
+
+mainMenu()
