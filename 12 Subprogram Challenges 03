@@ -1,0 +1,22 @@
+def mainMenu():
+    print("Single Player")
+    print("Multiplayer")
+    print("Online")
+    print("Exit")
+
+    ans = int(input("\nWhich mode do you choose? "))
+
+    match ans:
+        case 1:
+            print("Single player selected.")
+        case 2:
+            print("Multiplayer selected.")
+        case 3:
+            print("Online selected.")
+        case 4:
+            print("Exiting...")
+        case _:
+            print("Please select a valid option.\n")
+            mainMenu()
+
+mainMenu()
