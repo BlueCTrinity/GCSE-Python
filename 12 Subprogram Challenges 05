@@ -1,0 +1,37 @@
+def mainMenu():
+    print("Think big")
+    print("Think bigger")
+    print("Winning")
+    print("Winner")
+    print("Exit")
+
+    ans = int(input("\nWhich mode do you choose? "))
+
+    match ans:
+        case 1:
+            thinkBig()
+        case 2:
+            thinkBigger()
+        case 3:
+            winning()
+        case 4:
+            winner()
+        case 5:
+            print("Bye")
+        case _:
+            print("Please select a valid option.\n")
+            mainMenu()
+
+def thinkBig():
+    print("Think big selected.")
+
+def thinkBigger():
+    print("Think bigger selected.")
+
+def winning():
+    print("Winning selected.")
+
+def winner():
+    print("Winner selected.")
+
+mainMenu()
