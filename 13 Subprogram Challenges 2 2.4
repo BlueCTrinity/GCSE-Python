@@ -6,7 +6,7 @@ def menu():
     print("4 - Subtraction")
     print("5 - Division")
     print("6 - Modulo")
-    print("7 - Floor Division") 
+    print("7 - Floor Division")
     ans = int(input())
 
     if ans == 0:
@@ -23,6 +23,8 @@ def menu():
         division()
     elif ans == 6:
         modulo()
+    elif ans == 7:
+        floorDivision()
     else:
         print("Please enter a valid choice.")
         menu()
