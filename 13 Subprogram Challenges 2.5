@@ -1,0 +1,72 @@
+def menu():
+    print("0 - Exit")
+    print("1 - Timetables")
+    print("2 - Addition")
+    print("3 - Multiplication")
+    print("4 - Subtraction")
+    print("5 - Division")
+    print("6 - Modulo")
+    print("7 - Floor Division") 
+    ans = int(input())
+
+    if ans == 0:
+        print("Bye!")
+    elif ans == 1:
+        timestable()
+    elif ans == 2:
+        addition()
+    elif ans == 3:
+        multiplication()
+    elif ans == 4:
+        subtraction()
+    elif ans == 5:
+        division()
+    elif ans == 6:
+        modulo()
+    else:
+        print("Please enter a valid choice.")
+        menu()
+
+def timestable():
+    num = int(input("Enter a number between 1 and 12. "))
+    for i in range(1, 13):
+        print(num * i)
+    menu()
+
+def addition():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1+num2)
+    menu()
+
+def multiplication():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1*num2)
+    menu()
+
+def subtraction():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1-num2)
+    menu()
+
+def division():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1/num2)
+    menu()
+
+def modulo():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1%num2)
+    menu()
+
+def floorDivision():
+    num1 = int(input("Enter your first number. "))
+    num2 = int(input("Enter your second number. "))
+    print(num1//num2)
+    menu()
+
+menu()
